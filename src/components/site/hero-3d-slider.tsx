@@ -56,10 +56,20 @@ const AUTOPLAY_MS = 5000;
 const DRAG_THRESHOLD = 56;
 
 /** Configuração visual por distância do slide ativo (efeito coverflow 3D) */
-const LAYER = [
+type LayerCfg = { x: number; z: number; rot: number; scale: number; opacity: number };
+
+/** Telas grandes: palco largo, vizinhos bem visíveis com profundidade */
+const LAYER_WIDE: LayerCfg[] = [
   { x: 0, z: 50, rot: 0, scale: 1, opacity: 1 }, // central
-  { x: 60, z: -170, rot: 40, scale: 0.88, opacity: 0.72 }, // vizinho
-  { x: 104, z: -330, rot: 52, scale: 0.76, opacity: 0.4 }, // distante (fallback)
+  { x: 64, z: -190, rot: 42, scale: 0.87, opacity: 0.75 }, // vizinho
+  { x: 110, z: -340, rot: 54, scale: 0.76, opacity: 0.4 }, // distante (fallback)
+];
+
+/** Telas pequenas: offsets menores para não vazar da tela */
+const LAYER_COMPACT: LayerCfg[] = [
+  { x: 0, z: 50, rot: 0, scale: 1, opacity: 1 }, // central
+  { x: 54, z: -160, rot: 46, scale: 0.84, opacity: 0.65 }, // vizinho
+  { x: 100, z: -320, rot: 56, scale: 0.74, opacity: 0.35 }, // distante (fallback)
 ];
 
 function circularOffset(i: number, active: number, n: number) {
@@ -73,12 +83,23 @@ export function Hero3DSlider() {
   const n = SLIDES.length;
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [compact, setCompact] = useState(false);
   const dragging = useRef(false);
   const startX = useRef(0);
   const moved = useRef(0);
 
   // Exibe o slide central + vizinhos imediatos (coverflow limpo, sem vazamento nas bordas)
   const maxVisible = 1;
+  const LAYER = compact ? LAYER_COMPACT : LAYER_WIDE;
+
+  // Camadas responsivas: offsets menores em telas estreitas (< 640px)
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const update = () => setCompact(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
   const go = useCallback(
     (dir: 1 | -1) => setActive((a) => (a + dir + n) % n),
@@ -152,7 +173,7 @@ export function Hero3DSlider() {
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
         style={{ touchAction: "pan-y" }}
-        className="relative h-[300px] w-full rounded-3xl outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 sm:h-[430px] lg:h-[460px] xl:h-[500px]"
+        className="relative h-[280px] w-full rounded-3xl outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 sm:h-[430px] lg:h-[500px] xl:h-[540px]"
       >
         <div
           aria-hidden={false}
@@ -171,11 +192,11 @@ export function Hero3DSlider() {
                   aria-hidden={abs !== 0}
                   aria-roledescription="slide"
                   className={cn(
-                    "absolute left-1/2 top-1/2 aspect-[3/2] w-[74%] cursor-pointer overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-900/10 sm:w-[58%] lg:w-[56%] xl:w-[60%]",
+                    "absolute left-1/2 top-1/2 aspect-[3/2] w-[82%] cursor-pointer overflow-hidden rounded-2xl bg-slate-100 ring-1 ring-slate-900/10 sm:w-[62%] lg:w-[54%] xl:w-[52%]",
                     abs === 0 ? "shadow-2xl shadow-teal-900/30" : "shadow-lg shadow-teal-900/20",
                   )}
                   style={{
-                    maxWidth: "540px",
+                    maxWidth: "640px",
                     transform: `translate(-50%, -50%) translateX(${off * cfg.x}%) translateZ(${cfg.z}px) rotateY(${off * -cfg.rot}deg) scale(${cfg.scale})`,
                     opacity: hidden ? 0 : cfg.opacity,
                     zIndex: 30 - abs,
@@ -237,7 +258,7 @@ export function Hero3DSlider() {
           type="button"
           onClick={() => go(-1)}
           aria-label="Slide anterior"
-          className="absolute left-0 top-1/2 z-40 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-slate-200 bg-white/95 text-slate-700 shadow-lg transition-all hover:bg-white hover:text-teal-700 sm:left-2 lg:left-4"
+          className="absolute left-0 top-1/2 z-40 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-slate-200 bg-white/95 text-slate-700 shadow-lg transition-all hover:bg-white hover:text-teal-700 sm:left-2 lg:left-6"
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
@@ -245,7 +266,7 @@ export function Hero3DSlider() {
           type="button"
           onClick={() => go(1)}
           aria-label="Próximo slide"
-          className="absolute right-0 top-1/2 z-40 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-slate-200 bg-white/95 text-slate-700 shadow-lg transition-all hover:bg-white hover:text-teal-700 sm:right-2 lg:right-4"
+          className="absolute right-0 top-1/2 z-40 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-slate-200 bg-white/95 text-slate-700 shadow-lg transition-all hover:bg-white hover:text-teal-700 sm:right-2 lg:right-6"
         >
           <ChevronRight className="h-5 w-5" />
         </button>

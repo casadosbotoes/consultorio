@@ -1,8 +1,8 @@
-import { ArrowDown, HeartHandshake, MapPin, ShieldCheck, SmilePlus, Sparkles } from "lucide-react";
+import { ArrowDown, HeartHandshake, MapPin, ShieldCheck, Sparkles } from "lucide-react";
 import { site } from "@/lib/site";
 import { Hero3DSlider } from "./hero-3d-slider";
 import { Reveal } from "./reveal";
-import { ToothIcon, WhatsAppIcon } from "./icons";
+import { WhatsAppIcon } from "./icons";
 
 const TRUST = [
   { icon: ShieldCheck, label: "Planejamento personalizado" },
@@ -24,9 +24,9 @@ export function HeroSection() {
         <div className="bg-dots absolute inset-x-0 top-0 h-64 opacity-40 [mask-image:linear-gradient(to_bottom,black,transparent)]" />
       </div>
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 pb-14 pt-10 sm:px-6 sm:pt-16 lg:grid-cols-[1.02fr_1fr] lg:gap-16 lg:pb-20 lg:pt-14">
-        {/* Coluna de texto */}
-        <div className="max-w-xl">
+      <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-10 sm:px-6 sm:pt-16 lg:pb-24">
+        {/* Bloco de apresentação centralizado */}
+        <div className="mx-auto max-w-3xl text-center">
           <Reveal>
             <span className="inline-flex items-center gap-2 rounded-full border border-teal-200 bg-white px-4 py-1.5 text-xs font-semibold text-teal-800 shadow-sm sm:text-sm">
               <MapPin className="h-3.5 w-3.5 text-teal-600" aria-hidden="true" />
@@ -59,7 +59,7 @@ export function HeroSection() {
           </Reveal>
 
           <Reveal delay={0.24}>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <a
                 href={site.whatsapp.href(site.whatsapp.defaultMessage)}
                 target="_blank"
@@ -80,7 +80,7 @@ export function HeroSection() {
           </Reveal>
 
           <Reveal delay={0.32}>
-            <ul className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <ul className="mt-9 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
               {TRUST.map(({ icon: Icon, label }) => (
                 <li
                   key={label}
@@ -96,37 +96,9 @@ export function HeroSection() {
           </Reveal>
         </div>
 
-        {/* Slider 3D */}
-        <Reveal delay={0.2} y={32} className="relative">
-          <div className="relative">
-            <Hero3DSlider />
-
-            {/* selos flutuantes */}
-            <div
-              aria-hidden="true"
-              className="float-soft absolute -left-2 top-6 z-30 hidden items-center gap-2.5 rounded-2xl border border-slate-100 bg-white/95 px-4 py-3 shadow-xl backdrop-blur sm:flex lg:-left-6"
-            >
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-teal-600 text-white">
-                <ToothIcon className="h-5 w-5" />
-              </span>
-              <span className="leading-tight">
-                <span className="block text-sm font-bold text-slate-900">Implantodontia</span>
-                <span className="block text-xs text-slate-500">implantes com precisão</span>
-              </span>
-            </div>
-            <div
-              aria-hidden="true"
-              className="float-soft-delay absolute -right-2 bottom-20 z-30 hidden items-center gap-2.5 rounded-2xl border border-slate-100 bg-white/95 px-4 py-3 shadow-xl backdrop-blur sm:flex lg:-right-6"
-            >
-              <span className="grid h-9 w-9 place-items-center rounded-xl bg-teal-600 text-white">
-                <SmilePlus className="h-5 w-5" />
-              </span>
-              <span className="leading-tight">
-                <span className="block text-sm font-bold text-slate-900">Reabilitação Oral</span>
-                <span className="block text-xs text-slate-500">seu sorriso de volta</span>
-              </span>
-            </div>
-          </div>
+        {/* Slider 3D em destaque, largura total logo abaixo da apresentação */}
+        <Reveal delay={0.2} y={32} className="mt-12 sm:mt-14 lg:mt-16">
+          <Hero3DSlider />
         </Reveal>
       </div>
     </section>
