@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { BadgeCheck, GraduationCap } from "lucide-react";
-import { site } from "@/lib/site";
+import { site, asset } from "@/lib/site";
 import { Reveal, SectionHeading } from "./reveal";
 import { WhatsAppIcon } from "./icons";
 
@@ -30,7 +30,7 @@ export function AboutSection() {
             />
             <div className="relative overflow-hidden rounded-3xl shadow-2xl">
               <Image
-                src="/images/sobre-atendimento.jpg"
+                src={asset("/images/sobre-atendimento.jpg")}
                 alt="Dr. Marcelo Dercatshoff Pereira atendendo paciente no consultório odontológico em Ribeirão Preto"
                 width={1066}
                 height={800}

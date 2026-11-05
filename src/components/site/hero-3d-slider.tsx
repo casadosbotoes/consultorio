@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { asset } from "@/lib/site";
 
 type Slide = {
   src: string;
@@ -14,37 +15,37 @@ type Slide = {
 
 const SLIDES: Slide[] = [
   {
-    src: "/images/slider-implante.jpg",
+    src: asset("/images/slider-implante.jpg"),
     alt: "Implante dentário de titânio com coroa sobre modelo didático — Implantodontia em Ribeirão Preto",
     tag: "Implantodontia",
     title: "Implantes dentários com planejamento",
   },
   {
-    src: "/images/slider-sorriso.jpg",
+    src: asset("/images/slider-sorriso.jpg"),
     alt: "Sorriso harmônico com dentes brancos e alinhados — estética dental em Ribeirão Preto",
     tag: "Dentística",
     title: "Estética e harmonia do sorriso",
   },
   {
-    src: "/images/slider-reabilitacao.jpg",
+    src: asset("/images/slider-reabilitacao.jpg"),
     alt: "Paciente sorrindo durante atendimento de reabilitação oral em Ribeirão Preto",
     tag: "Reabilitação Oral",
     title: "Reabilitação oral completa",
   },
   {
-    src: "/images/slider-protese.jpg",
+    src: asset("/images/slider-protese.jpg"),
     alt: "Coroa protética sendo posicionada sobre modelo de arcada dentária — prótese sobre implante",
     tag: "Prótese sobre implante",
     title: "Próteses com precisão",
   },
   {
-    src: "/images/slider-atendimento.jpg",
+    src: asset("/images/slider-atendimento.jpg"),
     alt: "Dentista atendendo paciente em consultório odontológico moderno e acolhedor",
     tag: "Atendimento humanizado",
     title: "Você no centro de tudo",
   },
   {
-    src: "/images/slider-clinica.jpg",
+    src: asset("/images/slider-clinica.jpg"),
     alt: "Consultório odontológico moderno no Centro de Ribeirão Preto — Edifício Center Plaza",
     tag: "Estrutura moderna",
     title: "Consultório no Centro de Ribeirão Preto",

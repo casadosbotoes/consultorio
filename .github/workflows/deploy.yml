@@ -35,6 +35,8 @@ jobs:
           # Caminho do repositório no GitHub Pages — ajuste se renomear o repo
           # ou deixe vazio ("") se usar domínio próprio
           NEXT_BASE_PATH: /consultorio
+          # Prefixa as imagens referenciadas no código (next/image com src string)
+          NEXT_PUBLIC_BASE_PATH: /consultorio
 
       - name: Disable Jekyll
         run: touch out/.nojekyll

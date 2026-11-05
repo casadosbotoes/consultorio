@@ -5,6 +5,13 @@
 
 export const SITE_URL = "https://casadosbotoes.github.io/consultorio";
 
+/**
+ * Prefixa caminhos de assets com o basePath (GitHub Pages) quando definido.
+ * No ambiente local (sem NEXT_PUBLIC_BASE_PATH) retorna o caminho original.
+ */
+export const asset = (path: string) =>
+  `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
+
 export const site = {
   url: SITE_URL,
   name: "Dr. Marcelo Dercatshoff Pereira",
